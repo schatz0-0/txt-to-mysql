@@ -10,9 +10,15 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:
-    username:
-    password:
+    url: jdbc:mysql://127.0.0.1:3306/txt2mysql?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: '123456'
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: update
   application:
     name: consumer-client
 

@@ -1,19 +1,30 @@
 package com.lin.service;
 
+import cn.hutool.core.date.BetweenFormatter;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
+import com.lin.dao.CtdRepository;
+import com.lin.domain.Ctd;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.File;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 @PropertySource("classpath:application.yml")
+@Slf4j
 public class changeTxt {
     protected static final Logger logger = LoggerFactory.getLogger(changeTxt.class);
 
@@ -24,6 +35,11 @@ public class changeTxt {
     @Value("${dbshu.root}")
     private String dbRoot;
 
+    @Autowired
+    private CtdService ctdService;
+
+    @Autowired
+    private CtdRepository ctdRepository;
 
     private static List<String> list = new ArrayList();
     public void readFile(String filePath){
@@ -73,12 +89,20 @@ public class changeTxt {
             e.printStackTrace();
         }
     }
+    @Transactional(rollbackFor = Exception.class)
     public void run() {
-        String read1[] = dbName.trim().split(" +");
-        for (int i = 0; i < read1.length; i++){
-            list.add(read1[i]);
-        }
-        readFile(dbRoot);
+        Date start = new Date();
+        //获取文件内容List
+        List<Ctd> ctdList = ctdService.readCtdFile("E:\\temp\\txt-to-mysql\\src\\main\\resources\\ctd10000Test.txt");
+        //保存数据
+        ctdRepository.saveAll(ctdList);
+        Date end = new Date();
+        log.info("插入：{}条数据，共耗时：{}",ctdList.size(), DateUtil.formatBetween(start,end, BetweenFormatter.Level.SECOND));
+//        String read1[] = dbName.trim().split(" +");
+//        for (int i = 0; i < read1.length; i++){
+//            list.add(read1[i]);
+//        }
+//        readFile(dbRoot);
     }
 
 }
