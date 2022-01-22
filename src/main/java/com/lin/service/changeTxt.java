@@ -3,6 +3,9 @@ package com.lin.service;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
+import com.lin.db.Column;
+import com.lin.db.DbTableInfo;
+import com.lin.db.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,6 +82,19 @@ public class changeTxt {
             list.add(read1[i]);
         }
         readFile(dbRoot);
+    }
+
+    public void run(String filePath, String tableName) {
+        // 数据库表字段信息
+        Table table = DbTableInfo.getTable(tableName);
+        if (table == null) {
+            return;
+        }
+        for (Column column : table.getColumns()) {
+            list.add(column.getColumnName());
+        }
+        this.dbTitle = table.getTableName();
+        readFile(filePath);
     }
 
 }

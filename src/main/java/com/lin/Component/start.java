@@ -7,8 +7,11 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-@Slf4j
-@Component
+/**
+ * 此方式废弃
+ */
+//@Slf4j
+//@Component
 public class start implements ApplicationRunner {
     @Autowired
     private com.lin.service.changeTxt changeTxt;
