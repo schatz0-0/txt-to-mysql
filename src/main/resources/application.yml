@@ -9,7 +9,9 @@ spring:
     default-property-inclusion: non_empty
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    # 测试环境为 mysql-5.7.30 临时修改
+    driver-class-name: com.mysql.jdbc.Driver
     url:
     username:
     password:
@@ -17,6 +19,7 @@ spring:
     name: consumer-client
 
 failOnMissingWebXml: false
+# 此处可以废弃，根据数据库表设计来插入数据
 dbshu:
   root: "C:/Users/lin/Desktop/txt-to-mysql/file"
   title: "sea"

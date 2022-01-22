@@ -1,15 +1,15 @@
 ## db.setting文件
 
-url = 
-user = 
-pass = 
+#url =
+#user =
+#pass =
 
 ## 可选配置
 # 是否在日志中显示执行的SQL
-showSql = true
+#showSql = true
 # 是否格式化显示的SQL
-formatSql = false
+#formatSql = false
 # 是否显示SQL参数
-showParams = true
+#showParams = true
 # 打印SQL的日志等级，默认debug，可以是info、warn、error
-sqlLevel = debug
+#sqlLevel = debug
